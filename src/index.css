@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Custom Luxury Gradients & Borders */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #f7eccd 0%, #d4a43b 40%, #edd69c 70%, #b88628 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #d4a43b 0%, #edd69c 35%, #b88628 70%, #e1be67 100%);
+}
+
+.gold-border {
+  border: 1px solid rgba(212, 164, 59, 0.4);
+}
+
+.gold-border-glow {
+  box-shadow: 0 0 15px rgba(212, 164, 59, 0.25), inset 0 0 10px rgba(212, 164, 59, 0.15);
+}
+
+.royal-shadow {
+  box-shadow: 0 20px 40px -15px rgba(21, 41, 27, 0.35), 0 0 25px rgba(0, 0, 0, 0.1);
+}
+
+.wax-seal-shadow {
+  box-shadow: 
+    0 10px 25px -5px rgba(0, 0, 0, 0.5),
+    0 0 0 2px rgba(212, 164, 59, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Gatefold Door Embossed Pattern */
+.emerald-damask {
+  background-color: #1f3824;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(212, 164, 59, 0.08) 0%, transparent 60%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 2px, transparent 2px, transparent 12px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 2px, transparent 2px, transparent 12px);
+}
+
+.paper-texture {
+  background-color: #fbf8f0;
+  background-image: radial-gradient(rgba(212, 164, 59, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Scalloped Drape Arch Header */
+.scalloped-border {
+  background-image: radial-gradient(circle at 10px 0, transparent 0, transparent 10px, #fbf8f0 10px);
+  background-size: 20px 20px;
+}
+
+/* Custom Scrollbar for Luxury Theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #15291b;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4a43b;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #edd69c;
+}
