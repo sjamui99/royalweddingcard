@@ -37,6 +37,12 @@ export default function App() {
     }
   });
 
+  // Determine starting view mode:
+  // If there's a ?card= param in the URL, start in Guest Invitation View.
+  const [viewMode, setViewMode] = useState(() => {
+    return isSharedViaUrl ? 'guest' : 'studio';
+  });
+
   // Sync lang when card defaultLanguage changes
   useEffect(() => {
     if (card?.defaultLanguage) {
@@ -82,12 +88,6 @@ export default function App() {
       localStorage.setItem('royal_wedding_lang', newLang);
     } catch {}
   };
-
-  // Determine starting view mode:
-  // If there's a ?card= param in the URL, start in Guest Invitation View.
-  const [viewMode, setViewMode] = useState(() => {
-    return isSharedViaUrl ? 'guest' : 'studio';
-  });
 
   // Save changes to localStorage when updated in studio
   const handleUpdateCard = (updated) => {
