@@ -6,6 +6,12 @@ import { StudioEditor } from './components/StudioEditor';
 import { LanguageSwitcher } from './components/common/LanguageSwitcher';
 
 export default function App() {
+  // Check if opened as an invitation recipient via shared URL parameter (?card=... or #card=...)
+  const isSharedViaUrl = (() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.has('card') || window.location.hash.startsWith('#card=');
+  })();
+
   const [card, setCard] = useState(() => {
     // 1. Check if opened via URL query (?card=...)
     const fromUrl = getCardFromCurrentUrl();
@@ -48,10 +54,7 @@ export default function App() {
   // Determine starting view mode:
   // If there's a ?card= param in the URL, start in Guest Invitation View.
   const [viewMode, setViewMode] = useState(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return (urlParams.has('card') || window.location.hash.startsWith('#card='))
-      ? 'guest' 
-      : 'studio';
+    return isSharedViaUrl ? 'guest' : 'studio';
   });
 
   // Save changes to localStorage when updated in studio
@@ -71,8 +74,9 @@ export default function App() {
         <InvitationView
           card={card}
           lang={lang}
+          isSharedViaUrl={isSharedViaUrl}
           onLanguageChange={handleLanguageChange}
-          onSwitchToStudio={() => setViewMode('studio')}
+          onSwitchToStudio={isSharedViaUrl ? null : () => setViewMode('studio')}
         />
       ) : (
         <StudioEditor

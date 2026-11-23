@@ -15,7 +15,14 @@ import { LanguageSwitcher } from '../common/LanguageSwitcher';
 import { Sparkles, Edit3 } from 'lucide-react';
 import { getTranslation } from '../../utils/translations';
 
-export function InvitationView({ card, lang = 'en', onLanguageChange, onSwitchToStudio, isPreview = false }) {
+export function InvitationView({ 
+  card, 
+  lang = 'en', 
+  onLanguageChange, 
+  onSwitchToStudio, 
+  isSharedViaUrl = false, 
+  isPreview = false 
+}) {
   const [isOpened, setIsOpened] = useState(false);
 
   return (
@@ -34,8 +41,8 @@ export function InvitationView({ card, lang = 'en', onLanguageChange, onSwitchTo
         {/* Floating Background Music Control */}
         <MusicPlayerToggle />
 
-        {/* Floating Switch-to-Editor Button for Creator */}
-        {onSwitchToStudio && (
+        {/* Floating Switch-to-Editor Button for Creator (Only in host preview mode, never when shared via URL) */}
+        {!isSharedViaUrl && onSwitchToStudio && (
           <div className="fixed bottom-5 right-5 z-40 flex items-center space-x-2">
             <button
               onClick={onSwitchToStudio}
@@ -109,7 +116,7 @@ export function InvitationView({ card, lang = 'en', onLanguageChange, onSwitchTo
               </div>
             )}
 
-            {onSwitchToStudio && (
+            {!isSharedViaUrl && onSwitchToStudio && (
               <button
                 onClick={onSwitchToStudio}
                 className="mt-5 text-[11px] font-sans text-stone-500 hover:text-stone-800 underline tracking-wider block mx-auto"
