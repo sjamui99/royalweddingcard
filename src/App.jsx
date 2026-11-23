@@ -3,6 +3,7 @@ import { DEFAULT_CARD_DATA } from './types/defaultCardData';
 import { getCardFromCurrentUrl } from './utils/urlCompression';
 import { InvitationView } from './components/InvitationView';
 import { StudioEditor } from './components/StudioEditor';
+import { LanguageSwitcher } from './components/common/LanguageSwitcher';
 
 export default function App() {
   const [card, setCard] = useState(() => {
@@ -20,9 +21,23 @@ export default function App() {
     return DEFAULT_CARD_DATA;
   });
 
+  const [lang, setLang] = useState(() => {
+    try {
+      return localStorage.getItem('royal_wedding_lang') || 'en';
+    } catch {
+      return 'en';
+    }
+  });
+
+  const handleLanguageChange = (newLang) => {
+    setLang(newLang);
+    try {
+      localStorage.setItem('royal_wedding_lang', newLang);
+    } catch {}
+  };
+
   // Determine starting view mode:
   // If there's a ?card= param in the URL, start in Guest Invitation View.
-  // Otherwise, start in Studio Editor mode so the user can immediately generate/customize!
   const [viewMode, setViewMode] = useState(() => {
     const urlParams = new URLSearchParams(window.location.search);
     return (urlParams.has('card') || window.location.hash.startsWith('#card='))
@@ -39,19 +54,30 @@ export default function App() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-stone-950">
+    <div className="w-full min-h-screen bg-stone-950 relative">
       {viewMode === 'guest' ? (
         <InvitationView
           card={card}
+          lang={lang}
+          onLanguageChange={handleLanguageChange}
           onSwitchToStudio={() => setViewMode('studio')}
         />
       ) : (
         <StudioEditor
           card={card}
+          lang={lang}
+          onLanguageChange={handleLanguageChange}
           onUpdateCard={handleUpdateCard}
           onPreviewGuestView={() => setViewMode('guest')}
         />
       )}
+
+      {/* Floating Language Switcher at the bottom of the application */}
+      <LanguageSwitcher
+        lang={lang}
+        onToggle={handleLanguageChange}
+        isFloating={true}
+      />
     </div>
   );
 }

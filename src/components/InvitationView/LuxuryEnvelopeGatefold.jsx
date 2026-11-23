@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { WaxSeal } from '../common/Ornaments';
 import { royalAudio } from '../../utils/audioPlayer';
 import { triggerRoyalConfetti } from '../../utils/confetti';
+import { getTranslation } from '../../utils/translations';
 
-export function LuxuryEnvelopeGatefold({ isOpened, onOpen, card }) {
+export function LuxuryEnvelopeGatefold({ isOpened, onOpen, card, lang = 'en' }) {
   // Stages: 'closed' -> 'doors_opened' -> 'curtains_opened' -> 'completed'
   const [stage, setStage] = useState('closed');
 
@@ -177,7 +178,8 @@ export function LuxuryEnvelopeGatefold({ isOpened, onOpen, card }) {
               <WaxSeal
                 onClick={handleOpen}
                 isOpened={greenDoorsOpen}
-                label="TAP TO OPEN"
+                label={getTranslation('tapToOpen', lang)}
+                hint={getTranslation('tapToOpenHint', lang)}
               />
             </div>
           </div>

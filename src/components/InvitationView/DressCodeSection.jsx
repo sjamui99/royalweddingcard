@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { Shirt, Sparkles } from 'lucide-react';
+import { getTranslation } from '../../utils/translations';
 
-export function DressCodeSection({ dressCode }) {
+export function DressCodeSection({ dressCode, lang = 'en' }) {
   const [activeTab, setActiveTab] = useState('women');
 
   if (!dressCode) return null;
+
+  const womenText = lang === 'hi'
+    ? (dressCode.women.includes('pastel') ? getTranslation('womenDress', 'hi') : dressCode.women)
+    : dressCode.women;
+
+  const menText = lang === 'hi'
+    ? (dressCode.men.includes('formal') ? getTranslation('menDress', 'hi') : dressCode.men)
+    : dressCode.men;
 
   return (
     <div className="my-10 px-4 w-full max-w-sm mx-auto text-center select-none">
@@ -14,7 +23,7 @@ export function DressCodeSection({ dressCode }) {
           <Shirt className="w-5 h-5 text-amber-700" />
         </div>
         <h3 className="font-serif italic text-2xl text-stone-800">
-          Dress Code
+          {getTranslation('dressCode', lang)}
         </h3>
       </div>
 
@@ -28,7 +37,7 @@ export function DressCodeSection({ dressCode }) {
               : 'text-stone-700 hover:text-stone-900'
           }`}
         >
-          Women
+          {getTranslation('women', lang)}
         </button>
         <button
           onClick={() => setActiveTab('men')}
@@ -38,7 +47,7 @@ export function DressCodeSection({ dressCode }) {
               : 'text-stone-700 hover:text-stone-900'
           }`}
         >
-          Men
+          {getTranslation('men', lang)}
         </button>
       </div>
 
@@ -47,7 +56,7 @@ export function DressCodeSection({ dressCode }) {
         <div className="flex flex-col items-center">
           <Sparkles className="w-4 h-4 text-amber-600 mb-1.5" />
           <p className="font-serif italic text-base text-stone-800">
-            {activeTab === 'women' ? dressCode.women : dressCode.men}
+            {activeTab === 'women' ? womenText : menText}
           </p>
         </div>
       </div>

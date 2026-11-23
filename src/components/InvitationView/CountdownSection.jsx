@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { getTranslation } from '../../utils/translations';
 
-export function CountdownSection({ targetDate }) {
+export function CountdownSection({ targetDate, lang = 'en' }) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -31,21 +32,21 @@ export function CountdownSection({ targetDate }) {
   const padZero = (n) => String(n).padStart(2, '0');
 
   const items = [
-    { label: 'DAYS', val: padZero(timeLeft.days) },
-    { label: 'HOURS', val: padZero(timeLeft.hours) },
-    { label: 'MINUTES', val: padZero(timeLeft.minutes) },
-    { label: 'SECONDS', val: padZero(timeLeft.seconds) },
+    { label: getTranslation('days', lang), val: padZero(timeLeft.days) },
+    { label: getTranslation('hours', lang), val: padZero(timeLeft.hours) },
+    { label: getTranslation('minutes', lang), val: padZero(timeLeft.minutes) },
+    { label: getTranslation('seconds', lang), val: padZero(timeLeft.seconds) },
   ];
 
   return (
     <div className="my-8 px-4 text-center select-none">
       <h3 className="font-serif italic text-2xl text-stone-800 tracking-wide mb-4">
-        Counting Down to Forever
+        {getTranslation('countingDown', lang)}
       </h3>
 
       <div className="flex items-center justify-center space-x-2 md:space-x-3 max-w-sm mx-auto">
         {items.map((item, idx) => (
-          <React.Fragment key={item.label}>
+          <React.Fragment key={idx}>
             <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-xl py-3 px-1 border border-amber-300/60 shadow-sm flex flex-col items-center">
               <span className="font-serif text-2xl md:text-3xl font-bold text-stone-800 tracking-tight">
                 {item.val}

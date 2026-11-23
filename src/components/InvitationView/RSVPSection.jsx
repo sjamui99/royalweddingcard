@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Mail, CheckCircle2, HeartHandshake, Send } from 'lucide-react';
+import { Mail, CheckCircle2, Send } from 'lucide-react';
 import { triggerRoyalConfetti } from '../../utils/confetti';
 import { royalAudio } from '../../utils/audioPlayer';
+import { getTranslation } from '../../utils/translations';
 
-export function RSVPSection({ cardId = "default" }) {
+export function RSVPSection({ cardId = "default", lang = 'en' }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -46,10 +47,10 @@ export function RSVPSection({ cardId = "default" }) {
         </div>
 
         <h3 className="font-serif italic text-2xl text-stone-800 mb-1">
-          RSVP
+          {getTranslation('rsvpTitle', lang)}
         </h3>
         <p className="font-sans text-xs text-stone-500 mb-5">
-          Please let us know if you can join our celebration
+          {getTranslation('rsvpSubtitle', lang)}
         </p>
 
         {submitted ? (
@@ -58,31 +59,31 @@ export function RSVPSection({ cardId = "default" }) {
               <CheckCircle2 className="w-7 h-7" />
             </div>
             <h4 className="font-serif font-bold text-xl text-stone-800 mb-1">
-              Thank You, {formData.name}!
+              {getTranslation('thankYou', lang)}, {formData.name}!
             </h4>
             <p className="font-sans text-xs text-stone-600 max-w-xs leading-relaxed">
               {formData.attending === 'yes'
-                ? "Your response has been warmly received. We can't wait to celebrate together!"
-                : "Thank you for letting us know. You will be missed in our hearts!"}
+                ? getTranslation('responseJoyful', lang)
+                : getTranslation('responseDecline', lang)}
             </p>
 
             <button
               onClick={() => setSubmitted(false)}
               className="mt-6 text-xs text-amber-700 underline font-sans"
             >
-              Update your response
+              {getTranslation('updateResponse', lang)}
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4 text-left">
             <div>
               <label className="block text-[11px] font-sans font-medium text-stone-700 uppercase tracking-wider mb-1">
-                Your Full Name *
+                {getTranslation('fullName', lang)}
               </label>
               <input
                 type="text"
                 required
-                placeholder="e.g. Rahul Sharma"
+                placeholder={getTranslation('fullNamePlaceholder', lang)}
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-xs font-sans text-stone-800 outline-none transition-all bg-stone-50/50"
@@ -91,7 +92,7 @@ export function RSVPSection({ cardId = "default" }) {
 
             <div>
               <label className="block text-[11px] font-sans font-medium text-stone-700 uppercase tracking-wider mb-1">
-                Email Address
+                {getTranslation('emailAddress', lang)}
               </label>
               <input
                 type="email"
@@ -104,7 +105,7 @@ export function RSVPSection({ cardId = "default" }) {
 
             <div>
               <label className="block text-[11px] font-sans font-medium text-stone-700 uppercase tracking-wider mb-1.5">
-                Will you be attending? *
+                {getTranslation('willYouAttend', lang)}
               </label>
               <div className="grid grid-cols-2 gap-2">
                 <button
@@ -116,7 +117,7 @@ export function RSVPSection({ cardId = "default" }) {
                       : 'border-stone-200 text-stone-700 hover:bg-stone-50'
                   }`}
                 >
-                  Joyfully Accept ✨
+                  {getTranslation('joyfullyAccept', lang)}
                 </button>
                 <button
                   type="button"
@@ -127,7 +128,7 @@ export function RSVPSection({ cardId = "default" }) {
                       : 'border-stone-200 text-stone-700 hover:bg-stone-50'
                   }`}
                 >
-                  Regretfully Decline
+                  {getTranslation('regretfullyDecline', lang)}
                 </button>
               </div>
             </div>
@@ -135,28 +136,28 @@ export function RSVPSection({ cardId = "default" }) {
             {formData.attending === 'yes' && (
               <div>
                 <label className="block text-[11px] font-sans font-medium text-stone-700 uppercase tracking-wider mb-1">
-                  Number of Guests
+                  {getTranslation('numberOfGuests', lang)}
                 </label>
                 <select
                   value={formData.guests}
                   onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-amber-500 text-xs font-sans text-stone-800 outline-none bg-stone-50/50"
                 >
-                  <option value="1">1 Person</option>
-                  <option value="2">2 Persons</option>
-                  <option value="3">3 Persons</option>
-                  <option value="4+">Family (4+ Persons)</option>
+                  <option value="1">{getTranslation('onePerson', lang)}</option>
+                  <option value="2">{getTranslation('twoPersons', lang)}</option>
+                  <option value="3">{getTranslation('threePersons', lang)}</option>
+                  <option value="4+">{getTranslation('familyFourPlus', lang)}</option>
                 </select>
               </div>
             )}
 
             <div>
               <label className="block text-[11px] font-sans font-medium text-stone-700 uppercase tracking-wider mb-1">
-                Wishes & Blessings for the Couple
+                {getTranslation('wishes', lang)}
               </label>
               <textarea
                 rows={2}
-                placeholder="Write your heartfelt congratulations..."
+                placeholder={getTranslation('wishesPlaceholder', lang)}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full px-3.5 py-2 rounded-xl border border-stone-200 focus:border-amber-500 text-xs font-sans text-stone-800 outline-none bg-stone-50/50 resize-none"
@@ -168,7 +169,7 @@ export function RSVPSection({ cardId = "default" }) {
               className="w-full py-3 px-6 rounded-full bg-gradient-to-r from-emerald-800 to-emerald-700 hover:from-emerald-750 hover:to-emerald-650 text-amber-200 font-serif font-bold text-xs tracking-[0.2em] uppercase shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 border border-amber-400/40 mt-4 active:scale-98"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Send Message</span>
+              <span>{getTranslation('sendMessage', lang)}</span>
             </button>
           </form>
         )}

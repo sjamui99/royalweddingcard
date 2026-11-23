@@ -1,7 +1,8 @@
 import React from 'react';
 import { MapPin, ExternalLink, Navigation } from 'lucide-react';
+import { getTranslation } from '../../utils/translations';
 
-export function VenueAndMap({ venue }) {
+export function VenueAndMap({ venue, lang = 'en' }) {
   if (!venue) return null;
 
   const mapsSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -16,7 +17,7 @@ export function VenueAndMap({ venue }) {
           <MapPin className="w-5 h-5 text-amber-700" />
         </div>
         <h3 className="font-serif italic text-2xl text-stone-800">
-          Venue
+          {getTranslation('venue', lang)}
         </h3>
         <p className="font-serif font-bold text-lg text-stone-900 mt-1">
           {venue.name}
@@ -37,7 +38,7 @@ export function VenueAndMap({ venue }) {
         />
         <div className="absolute bottom-2 left-2 right-2 pointer-events-none text-center">
           <span className="bg-stone-900/70 text-amber-200 text-[10px] px-2.5 py-0.5 rounded-full backdrop-blur-sm">
-            Use two fingers to move the map
+            {getTranslation('useTwoFingers', lang)}
           </span>
         </div>
       </div>
@@ -50,7 +51,7 @@ export function VenueAndMap({ venue }) {
         className="inline-flex items-center justify-center space-x-2 py-2.5 px-6 rounded-full bg-gradient-to-r from-emerald-800 to-emerald-750 text-amber-200 hover:text-white font-serif font-bold text-xs tracking-widest uppercase border border-amber-400/50 shadow transition-all duration-300 hover:shadow-md"
       >
         <Navigation className="w-3.5 h-3.5 text-amber-300" />
-        <span>View on Google Maps</span>
+        <span>{getTranslation('viewOnGoogleMaps', lang)}</span>
         <ExternalLink className="w-3.5 h-3.5 ml-0.5 opacity-80" />
       </a>
     </div>

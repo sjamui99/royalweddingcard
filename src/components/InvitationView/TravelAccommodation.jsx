@@ -1,8 +1,13 @@
 import React from 'react';
 import { Bus, Hotel, Gift } from 'lucide-react';
+import { getTranslation } from '../../utils/translations';
 
-export function TravelAccommodation({ logistics }) {
+export function TravelAccommodation({ logistics, lang = 'en' }) {
   if (!logistics) return null;
+
+  const giftsNote = lang === 'hi' 
+    ? getTranslation('giftsNote', 'hi')
+    : (logistics.gifts || getTranslation('giftsNote', lang));
 
   return (
     <div className="my-10 px-4 w-full max-w-sm mx-auto space-y-6 select-none">
@@ -13,7 +18,7 @@ export function TravelAccommodation({ logistics }) {
             <Bus className="w-4 h-4 text-amber-700" />
           </div>
           <h4 className="font-serif italic text-xl text-stone-800 mb-1">
-            Transportation
+            {getTranslation('transportation', lang)}
           </h4>
           <p className="font-sans text-xs text-stone-600 leading-relaxed">
             {logistics.transportation}
@@ -28,7 +33,7 @@ export function TravelAccommodation({ logistics }) {
             <Hotel className="w-4 h-4 text-amber-700" />
           </div>
           <h4 className="font-serif italic text-xl text-stone-800 mb-1">
-            Accommodation
+            {getTranslation('accommodation', lang)}
           </h4>
           <p className="font-sans text-xs text-stone-600 leading-relaxed">
             {logistics.accommodation}
@@ -43,10 +48,10 @@ export function TravelAccommodation({ logistics }) {
             <Gift className="w-4 h-4 text-amber-700" />
           </div>
           <h4 className="font-serif italic text-xl text-stone-800 mb-1">
-            Gifts
+            {getTranslation('gifts', lang)}
           </h4>
           <p className="font-serif italic text-sm text-stone-700 leading-relaxed">
-            "{logistics.gifts}"
+            "{giftsNote}"
           </p>
         </div>
       )}

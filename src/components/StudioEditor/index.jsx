@@ -16,7 +16,7 @@ import { DressCodeSection } from '../InvitationView/DressCodeSection';
 import { PreWeddingEvents } from '../InvitationView/PreWeddingEvents';
 import { TravelAccommodation } from '../InvitationView/TravelAccommodation';
 
-export function StudioEditor({ card, onUpdateCard, onPreviewGuestView }) {
+export function StudioEditor({ card, lang = 'en', onLanguageChange, onUpdateCard, onPreviewGuestView }) {
   const [activeTab, setActiveTab] = useState('couple');
   const [showShareModal, setShowShareModal] = useState(false);
   const [showRSVPModal, setShowRSVPModal] = useState(false);
@@ -638,15 +638,15 @@ export function StudioEditor({ card, onUpdateCard, onPreviewGuestView }) {
 
             {/* Inner Card Scroll Content */}
             <div className="pt-4 overflow-y-auto max-h-[660px]">
-              <MainHeroInvitation card={card} isAnimated={false} />
-              <ScratchCardSection card={card} />
+              <MainHeroInvitation card={card} isAnimated={false} lang={lang} key={lang} />
+              <ScratchCardSection card={card} lang={lang} />
               <PhotoGalleryCarousel gallery={card.gallery} />
-              <CountdownSection targetDate={card.weddingDate} />
-              <ProgramTimeline timeline={card.timeline} />
-              <VenueAndMap venue={card.venue} />
-              <DressCodeSection dressCode={card.dressCode} />
-              <PreWeddingEvents events={card.preWeddingEvents} />
-              <TravelAccommodation logistics={card.logistics} />
+              <CountdownSection targetDate={card.weddingDate} lang={lang} />
+              <ProgramTimeline timeline={card.timeline} lang={lang} />
+              <VenueAndMap venue={card.venue} lang={lang} />
+              <DressCodeSection dressCode={card.dressCode} lang={lang} />
+              <PreWeddingEvents events={card.preWeddingEvents} lang={lang} />
+              <TravelAccommodation logistics={card.logistics} lang={lang} />
             </div>
           </div>
         </div>

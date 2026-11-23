@@ -11,9 +11,11 @@ import { PreWeddingEvents } from './PreWeddingEvents';
 import { TravelAccommodation } from './TravelAccommodation';
 import { RSVPSection } from './RSVPSection';
 import { MusicPlayerToggle } from './MusicPlayerToggle';
+import { LanguageSwitcher } from '../common/LanguageSwitcher';
 import { Sparkles, Edit3 } from 'lucide-react';
+import { getTranslation } from '../../utils/translations';
 
-export function InvitationView({ card, onSwitchToStudio, isPreview = false }) {
+export function InvitationView({ card, lang = 'en', onLanguageChange, onSwitchToStudio, isPreview = false }) {
   const [isOpened, setIsOpened] = useState(false);
 
   return (
@@ -26,6 +28,7 @@ export function InvitationView({ card, onSwitchToStudio, isPreview = false }) {
           isOpened={isOpened}
           onOpen={() => setIsOpened(true)}
           card={card}
+          lang={lang}
         />
 
         {/* Floating Background Music Control */}
@@ -39,7 +42,7 @@ export function InvitationView({ card, onSwitchToStudio, isPreview = false }) {
               className="px-4 py-2.5 rounded-full bg-stone-900/90 hover:bg-stone-950 text-amber-300 backdrop-blur-md shadow-xl border border-amber-400/40 text-xs font-sans font-medium flex items-center space-x-1.5 transition-all transform hover:scale-105"
             >
               <Edit3 className="w-3.5 h-3.5" />
-              <span>Customize Card</span>
+              <span>{getTranslation('customizeCard', lang)}</span>
             </button>
           </div>
         )}
@@ -50,52 +53,68 @@ export function InvitationView({ card, onSwitchToStudio, isPreview = false }) {
           <MainHeroInvitation
             card={card}
             isAnimated={isOpened}
-            key={isOpened ? 'opened' : 'closed'}
+            lang={lang}
+            key={`${isOpened ? 'opened' : 'closed'}_${lang}`}
           />
 
           {/* Interactive Scratch-to-Reveal Card (Heart on both front and behind) */}
-          <ScratchCardSection card={card} />
+          <ScratchCardSection card={card} lang={lang} />
 
           {/* Couple Moments Carousel */}
           <PhotoGalleryCarousel gallery={card.gallery} />
 
           {/* Countdown to Forever */}
-          <CountdownSection targetDate={card.weddingDate} />
+          <CountdownSection targetDate={card.weddingDate} lang={lang} />
 
           {/* Program Timeline */}
-          <ProgramTimeline timeline={card.timeline} />
+          <ProgramTimeline timeline={card.timeline} lang={lang} />
 
           {/* Venue & Map */}
-          <VenueAndMap venue={card.venue} />
+          <VenueAndMap venue={card.venue} lang={lang} />
 
           {/* Dress Code */}
-          <DressCodeSection dressCode={card.dressCode} />
+          <DressCodeSection dressCode={card.dressCode} lang={lang} />
 
           {/* Pre-Wedding Events */}
-          <PreWeddingEvents events={card.preWeddingEvents} />
+          <PreWeddingEvents events={card.preWeddingEvents} lang={lang} />
 
           {/* Transportation, Accommodation & Gifts */}
-          <TravelAccommodation logistics={card.logistics} />
+          <TravelAccommodation logistics={card.logistics} lang={lang} />
 
           {/* RSVP Form */}
-          <RSVPSection cardId={card.id || "card_1"} />
+          <RSVPSection cardId={card.id || "card_1"} lang={lang} />
 
-          {/* Footer */}
+          {/* Footer with Language Switcher */}
           <div className="py-8 px-4 text-center border-t border-amber-200/60 bg-amber-50/40">
             <div className="flex items-center justify-center space-x-1 text-amber-600 mb-1">
               <Sparkles className="w-3.5 h-3.5" />
-              <span className="font-serif italic text-xs">With Love & Gratitude</span>
+              <span className="font-serif italic text-xs">{getTranslation('withLoveAndGratitude', lang)}</span>
               <Sparkles className="w-3.5 h-3.5" />
             </div>
             <p className="font-serif text-sm font-semibold text-stone-800">
-              {card.groom?.name} & {card.bride?.name}
+              {lang === 'hi' && card.groom?.name === 'Zayn' ? 'ज़ैन' : card.groom?.name} & {lang === 'hi' && card.bride?.name === 'Nora' ? 'नोरा' : card.bride?.name}
             </p>
+
+            {/* Language Switcher in Footer */}
+            {onLanguageChange && (
+              <div className="mt-4 flex flex-col items-center">
+                <p className="text-[10px] font-sans text-stone-500 uppercase tracking-widest mb-1.5 font-medium">
+                  {lang === 'en' ? 'Select Language / भाषा चुनें' : 'भाषा चुनें / Select Language'}
+                </p>
+                <LanguageSwitcher
+                  lang={lang}
+                  onToggle={onLanguageChange}
+                  isFloating={false}
+                />
+              </div>
+            )}
+
             {onSwitchToStudio && (
               <button
                 onClick={onSwitchToStudio}
-                className="mt-4 text-[11px] font-sans text-stone-500 hover:text-stone-800 underline tracking-wider"
+                className="mt-5 text-[11px] font-sans text-stone-500 hover:text-stone-800 underline tracking-wider block mx-auto"
               >
-                Create your own wedding invitation web card ✨
+                {getTranslation('createYourOwn', lang)}
               </button>
             )}
           </div>

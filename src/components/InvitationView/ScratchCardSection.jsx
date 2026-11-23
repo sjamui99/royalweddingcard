@@ -3,8 +3,9 @@ import { Calendar, Check, Sparkles, Download, ExternalLink } from 'lucide-react'
 import { triggerRoyalConfetti } from '../../utils/confetti';
 import { downloadCalendarEvent, getGoogleCalendarUrl } from '../../utils/calendarExport';
 import { royalAudio } from '../../utils/audioPlayer';
+import { getTranslation } from '../../utils/translations';
 
-export function ScratchCardSection({ card }) {
+export function ScratchCardSection({ card, lang = 'en' }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const [isRevealed, setIsRevealed] = useState(false);
@@ -175,11 +176,11 @@ export function ScratchCardSection({ card }) {
 
       {/* Script Header */}
       <h3 className="font-script text-3xl md:text-4xl text-amber-900 drop-shadow-sm mb-1">
-        Scratch to Reveal
+        {getTranslation('scratchToReveal', lang)}
       </h3>
       <p className="text-xs text-stone-500 font-sans tracking-wide mb-4 flex items-center gap-1.5">
         <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-spin-slow" />
-        Rub the heart to uncover our wedding date
+        {getTranslation('rubToUncover', lang)}
       </p>
 
       {/* ========================================================
@@ -204,17 +205,17 @@ export function ScratchCardSection({ card }) {
             </div>
 
             <span className="font-script text-2xl text-amber-800 leading-tight">
-              {card.scratchRevealText || "Our forever begins"}
+              {lang === 'hi' ? getTranslation('ourForeverBegins', 'hi') : (card.scratchRevealText || getTranslation('ourForeverBegins', lang))}
             </span>
 
             <div className="my-1.5 h-[1.5px] w-28 bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
 
             <span className="font-serif text-lg font-bold tracking-wider text-stone-800 uppercase">
-              {card.dateFormatted || "November 30, 2026"}
+              {lang === 'hi' ? getTranslation('dateFormatted', 'hi') : (card.dateFormatted || "November 30, 2026")}
             </span>
 
             <span className="font-sans text-[11px] tracking-widest text-amber-700 uppercase mt-0.5 font-semibold">
-              {card.dayOfWeek || "Monday"}
+              {lang === 'hi' ? getTranslation('dayOfWeek', 'hi') : (card.dayOfWeek || "Monday")}
             </span>
           </div>
         </div>
@@ -265,7 +266,7 @@ export function ScratchCardSection({ card }) {
           onClick={handleManualReveal}
           className="mt-3 text-[11px] font-sans tracking-wider text-amber-700 hover:text-amber-900 underline underline-offset-2 opacity-80 hover:opacity-100"
         >
-          Can't scratch? Tap here to reveal date
+          {getTranslation('cantScratch', lang)}
         </button>
       )}
 
@@ -278,18 +279,18 @@ export function ScratchCardSection({ card }) {
           className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-800 hover:from-emerald-700 hover:to-emerald-600 text-amber-200 font-serif font-bold text-sm tracking-[0.2em] uppercase shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2 border border-amber-400/50 active:scale-95"
         >
           <Calendar className="w-4 h-4 text-amber-300" />
-          <span>Save The Date</span>
+          <span>{getTranslation('saveTheDate', lang)}</span>
         </button>
 
         {/* Confirmation feedback when tapped */}
         {savedToCalendar ? (
           <p className="text-xs font-sans text-emerald-700 font-medium mt-2 flex items-center justify-center gap-1 animate-fade-in">
             <Check className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Opening Google Calendar...</span>
+            <span>{getTranslation('openingCalendar', lang)}</span>
           </p>
         ) : (
           <p className="text-[10px] text-stone-500 font-sans mt-1.5 tracking-wide">
-            Tapping opens Google Calendar with event details pre-filled
+            {getTranslation('calendarHint', lang)}
           </p>
         )}
 
@@ -298,7 +299,7 @@ export function ScratchCardSection({ card }) {
           onClick={() => downloadCalendarEvent(card)}
           className="mt-2 text-[10px] text-amber-800/70 hover:text-amber-900 underline font-sans tracking-wider block mx-auto"
         >
-          Using Apple or Outlook? Download .ics file
+          {getTranslation('appleOutlookDownload', lang)}
         </button>
       </div>
 

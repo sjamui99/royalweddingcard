@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Royal Wax Seal Badge (TAP TO OPEN)
  */
-export function WaxSeal({ onClick, isOpened, label = "TAP TO OPEN" }) {
+export function WaxSeal({ onClick, isOpened, label = "TAP TO OPEN", hint = "Click to Open Invitation" }) {
   return (
     <button
       onClick={onClick}
@@ -36,7 +36,7 @@ export function WaxSeal({ onClick, isOpened, label = "TAP TO OPEN" }) {
         </div>
 
         {/* Text */}
-        <span className="font-serif text-[11px] md:text-xs tracking-[0.25em] font-semibold text-amber-950 uppercase mt-0.5 leading-tight drop-shadow-sm">
+        <span className="font-serif text-[11px] md:text-xs tracking-[0.15em] font-bold text-amber-950 uppercase mt-0.5 leading-tight drop-shadow-sm px-1">
           {label}
         </span>
 
@@ -49,7 +49,7 @@ export function WaxSeal({ onClick, isOpened, label = "TAP TO OPEN" }) {
 
         {/* Click hint pill */}
         <div className="absolute -bottom-8 bg-stone-900/80 backdrop-blur-md px-3 py-1 rounded-full border border-amber-400/40 text-[10px] text-amber-200 tracking-wider whitespace-nowrap opacity-90 group-hover:opacity-100 transition-opacity">
-          Click to Open Invitation
+          {hint}
         </div>
       </div>
     </button>
