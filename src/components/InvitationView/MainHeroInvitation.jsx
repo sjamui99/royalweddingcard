@@ -19,11 +19,11 @@ export function MainHeroInvitation({ card, isAnimated = true, lang = 'en' }) {
     ? (card?.coupleTagline === "We're getting married" ? getTranslation('weAreGettingMarried', 'hi') : card?.coupleTagline)
     : (card?.coupleTagline || "We're getting married");
 
-  const groomName = (lang === 'hi' && groom.name === 'Zayn') ? getTranslation('groomName', 'hi') : groom.name || 'Zayn';
+  const groomName = (lang === 'hi' && groom.name === 'Zayn') ? getTranslation('groomName', 'hi') : groom.name || 'Groom';
   const groomParents = (lang === 'hi' && groom.parents?.includes('Mr. & Mrs. Malik')) ? getTranslation('groomParents', 'hi') : groom.parents;
   const groomTitle = (lang === 'hi' && groom.title?.includes('Data Scientist')) ? getTranslation('groomTitle', 'hi') : groom.title;
 
-  const brideName = (lang === 'hi' && bride.name === 'Nora') ? getTranslation('brideName', 'hi') : bride.name || 'Nora';
+  const brideName = (lang === 'hi' && bride.name === 'Nora') ? getTranslation('brideName', 'hi') : bride.name || 'Bride';
   const brideParents = (lang === 'hi' && bride.parents?.includes('Mr. & Mrs. Siddiqui')) ? getTranslation('brideParents', 'hi') : bride.parents;
   const brideTitle = (lang === 'hi' && bride.title?.includes('Pediatrician')) ? getTranslation('brideTitle', 'hi') : bride.title;
 

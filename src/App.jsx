@@ -44,6 +44,38 @@ export default function App() {
     }
   }, [card?.defaultLanguage]);
 
+  // Update browser document/tab title dynamically based on typed names
+  useEffect(() => {
+    const groom = card?.groom?.name?.trim() || '';
+    const bride = card?.bride?.name?.trim() || '';
+
+    // If still untouched initial default sample ("Zayn" & "Nora") in studio mode, keep generic studio title
+    const isUntouchedSample = !isSharedViaUrl && groom === 'Zayn' && bride === 'Nora';
+
+    let coupleName = '';
+    if (!isUntouchedSample && (groom || bride)) {
+      if (groom && bride) {
+        coupleName = `${groom} & ${bride}`;
+      } else {
+        coupleName = groom || bride;
+      }
+    }
+
+    if (coupleName) {
+      if (viewMode === 'guest') {
+        document.title = `${coupleName} • ${lang === 'hi' ? 'शुभ विवाह निमंत्रण' : 'Wedding Invitation'}`;
+      } else {
+        document.title = `${coupleName} • Wedding Card Studio`;
+      }
+    } else {
+      if (viewMode === 'guest') {
+        document.title = lang === 'hi' ? 'शुभ विवाह निमंत्रण पत्र' : 'Royal Wedding Invitation';
+      } else {
+        document.title = 'Royal Wedding Card Studio';
+      }
+    }
+  }, [card?.groom?.name, card?.bride?.name, viewMode, lang, isSharedViaUrl]);
+
   const handleLanguageChange = (newLang) => {
     setLang(newLang);
     try {

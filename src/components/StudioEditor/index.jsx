@@ -93,7 +93,11 @@ export function StudioEditor({ card, lang = 'en', onLanguageChange, onUpdateCard
               Royal Wedding Card Studio
             </h1>
             <p className="text-[10px] text-stone-400 font-sans tracking-wider uppercase truncate">
-              {card.groom?.name} & {card.bride?.name} • Live Generator
+              {card.groom?.name && card.bride?.name
+                ? `${card.groom.name} & ${card.bride.name} • Live Generator`
+                : (card.groom?.name || card.bride?.name)
+                ? `${card.groom?.name || card.bride?.name} • Live Generator`
+                : 'Live Invitation Generator'}
             </p>
           </div>
         </div>
