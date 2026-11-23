@@ -83,45 +83,47 @@ export function StudioEditor({ card, lang = 'en', onLanguageChange, onUpdateCard
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans">
       {/* Top Studio Navigation Bar */}
-      <header className="sticky top-0 z-30 bg-stone-900/90 backdrop-blur-md border-b border-amber-500/30 px-4 md:px-8 py-3.5 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-stone-950 font-serif font-bold text-lg shadow-md">
+      <header className="sticky top-0 z-30 bg-stone-900/95 backdrop-blur-md border-b border-amber-500/30 px-3 sm:px-6 py-2.5 sm:py-3 flex flex-wrap items-center justify-between gap-2.5">
+        <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-stone-950 font-serif font-bold text-base sm:text-lg shadow-md flex-shrink-0">
             💍
           </div>
-          <div>
-            <h1 className="font-serif text-lg font-bold text-amber-200 tracking-wide">
+          <div className="min-w-0">
+            <h1 className="font-serif text-sm sm:text-lg font-bold text-amber-200 tracking-wide truncate">
               Royal Wedding Card Studio
             </h1>
-            <p className="text-[10px] text-stone-400 font-sans tracking-wider uppercase">
+            <p className="text-[10px] text-stone-400 font-sans tracking-wider uppercase truncate">
               {card.groom?.name} & {card.bride?.name} • Live Generator
             </p>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center space-x-2 md:space-x-3">
+        <div className="flex items-center flex-wrap gap-1.5 sm:gap-2.5 ml-auto">
           <button
             onClick={() => setShowRSVPModal(true)}
-            className="px-3 py-1.5 md:px-3.5 md:py-2 rounded-xl bg-stone-800 hover:bg-stone-750 text-stone-200 border border-stone-700 text-xs font-sans font-medium flex items-center space-x-1.5 transition-all"
+            className="px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-stone-800 hover:bg-stone-750 text-stone-200 border border-stone-700 text-xs font-sans font-medium flex items-center space-x-1.5 transition-all shadow-sm flex-shrink-0"
             title="View RSVPs submitted by guests"
           >
-            <Users className="w-3.5 h-3.5 text-amber-400" />
-            <span className="hidden sm:inline">Guest RSVPs</span>
+            <Users className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+            <span>RSVPs</span>
           </button>
 
           <button
             onClick={onPreviewGuestView}
-            className="px-3.5 py-1.5 md:px-4 md:py-2 rounded-xl bg-stone-800 hover:bg-stone-750 border border-amber-400/50 text-amber-300 text-xs font-sans font-semibold flex items-center space-x-1.5 transition-all shadow-sm"
+            className="px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 rounded-xl bg-stone-800 hover:bg-stone-750 border border-amber-400/50 text-amber-300 text-xs font-sans font-semibold flex items-center space-x-1.5 transition-all shadow-sm flex-shrink-0"
+            title="Open Live Guest Experience"
           >
-            <Eye className="w-3.5 h-3.5" />
+            <Eye className="w-3.5 h-3.5 flex-shrink-0" />
             <span>Open Experience</span>
           </button>
 
           <button
             onClick={() => setShowShareModal(true)}
-            className="px-4 py-1.5 md:px-5 md:py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-sans font-bold text-xs flex items-center space-x-1.5 shadow-md transition-all active:scale-95"
+            className="px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-sans font-bold text-xs flex items-center space-x-1.5 shadow-md transition-all active:scale-95 flex-shrink-0"
+            title="Share Invitation URL"
           >
-            <Share2 className="w-3.5 h-3.5" />
+            <Share2 className="w-3.5 h-3.5 flex-shrink-0" />
             <span>Share URL</span>
           </button>
         </div>
@@ -131,22 +133,22 @@ export function StudioEditor({ card, lang = 'en', onLanguageChange, onUpdateCard
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         
         {/* Left Panel: Form Settings */}
-        <div className="w-full lg:w-[54%] border-r border-stone-800 flex flex-col h-auto lg:h-[calc(100vh-65px)] overflow-y-auto">
+        <div className="w-full lg:w-[54%] border-r border-stone-800 flex flex-col h-auto lg:h-[calc(100vh-60px)] overflow-y-auto">
           {/* Sub Navigation Tabs */}
-          <div className="bg-stone-900 border-b border-stone-800 px-4 py-2.5 flex items-center space-x-1 overflow-x-auto">
+          <div className="bg-stone-900 border-b border-stone-800 px-3 sm:px-4 py-2 flex items-center space-x-1.5 overflow-x-auto no-scrollbar scroll-smooth">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-sans font-medium flex items-center space-x-1.5 whitespace-nowrap transition-all ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-sans font-medium flex items-center space-x-1.5 whitespace-nowrap flex-shrink-0 transition-all ${
                     activeTab === tab.id
                       ? 'bg-amber-500/20 text-amber-300 border border-amber-400/40'
                       : 'text-stone-400 hover:text-stone-200 hover:bg-stone-800/60'
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-3.5 h-3.5 flex-shrink-0" />
                   <span>{tab.label}</span>
                 </button>
               );
