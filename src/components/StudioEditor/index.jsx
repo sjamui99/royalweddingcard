@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
   Sparkles, Eye, Share2, Users, Palette, Calendar, MapPin, 
-  Clock, Shirt, Heart, Gift, Plus, Trash2, CheckCircle2, RotateCcw
+  Clock, Shirt, Heart, Gift, Plus, Trash2, CheckCircle2, RotateCcw,
+  Languages
 } from 'lucide-react';
 import { THEME_PRESETS } from '../../types/defaultCardData';
 import { ShareModal } from './ShareModal';
@@ -71,6 +72,7 @@ export function StudioEditor({ card, lang = 'en', onLanguageChange, onUpdateCard
 
   const tabs = [
     { id: 'couple', label: 'Bride & Groom', icon: Heart },
+    { id: 'language', label: 'Default Language', icon: Languages },
     { id: 'date', label: 'Date & Reveal', icon: Calendar },
     { id: 'theme', label: 'Royal Theme', icon: Palette },
     { id: 'timeline', label: 'Timeline', icon: Clock },
@@ -166,6 +168,69 @@ export function StudioEditor({ card, lang = 'en', onLanguageChange, onUpdateCard
                   </p>
                 </div>
 
+                {/* Default Language Selector */}
+                <div className="bg-stone-900/80 p-4 rounded-2xl border border-amber-500/30 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Languages className="w-4 h-4 text-amber-400" />
+                      <h4 className="text-xs font-sans uppercase tracking-wider text-amber-300 font-bold">
+                        Default Language for Guests (प्राथमिक भाषा)
+                      </h4>
+                    </div>
+                    <span className="text-[10px] bg-amber-400/20 text-amber-300 px-2 py-0.5 rounded-full font-sans font-medium border border-amber-400/30">
+                      Auto-loads for guests
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-stone-400 leading-relaxed">
+                    Choose the primary language guests will see upon opening your invitation link:
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        updateField('defaultLanguage', 'en');
+                        if (onLanguageChange) onLanguageChange('en');
+                      }}
+                      className={`p-3 rounded-xl border text-left transition-all flex flex-col justify-between ${
+                        (card.defaultLanguage || 'en') === 'en'
+                          ? 'bg-amber-400/15 border-amber-400 text-white shadow-lg ring-1 ring-amber-400'
+                          : 'bg-stone-800/60 border-stone-700 text-stone-300 hover:border-stone-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-base">🇬🇧</span>
+                        {(card.defaultLanguage || 'en') === 'en' && (
+                          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                        )}
+                      </div>
+                      <span className="text-xs font-bold text-stone-100">English</span>
+                      <span className="text-[10px] text-stone-400 mt-0.5">Standard English labels</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        updateField('defaultLanguage', 'hi');
+                        if (onLanguageChange) onLanguageChange('hi');
+                      }}
+                      className={`p-3 rounded-xl border text-left transition-all flex flex-col justify-between ${
+                        card.defaultLanguage === 'hi'
+                          ? 'bg-amber-400/15 border-amber-400 text-white shadow-lg ring-1 ring-amber-400'
+                          : 'bg-stone-800/60 border-stone-700 text-stone-300 hover:border-stone-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-base">🇮🇳</span>
+                        {card.defaultLanguage === 'hi' && (
+                          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                        )}
+                      </div>
+                      <span className="text-xs font-bold text-stone-100">हिंदी (Hindi)</span>
+                      <span className="text-[10px] text-stone-400 mt-0.5">॥ शुभ विवाह ॥ व देवनागरी</span>
+                    </button>
+                  </div>
+                </div>
+
                 {/* Groom */}
                 <div className="bg-stone-900/60 p-4 rounded-2xl border border-stone-800 space-y-3">
                   <h4 className="text-xs font-sans uppercase tracking-wider text-amber-400 font-bold flex items-center space-x-1.5">
@@ -258,6 +323,97 @@ export function StudioEditor({ card, lang = 'en', onLanguageChange, onUpdateCard
                       className="w-full px-3 py-2 rounded-xl bg-stone-900 border border-stone-700 text-stone-100 text-xs focus:border-amber-400 outline-none resize-none leading-relaxed"
                     />
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB: DEFAULT LANGUAGE */}
+            {activeTab === 'language' && (
+              <div className="space-y-6 animate-fade-in">
+                <div className="border-b border-stone-800 pb-3">
+                  <h3 className="font-serif text-lg font-bold text-amber-200 flex items-center space-x-2">
+                    <Languages className="w-5 h-5 text-amber-400" />
+                    <span>Default Language & Regional Settings</span>
+                  </h3>
+                  <p className="text-xs text-stone-400">
+                    Choose the primary language displayed to guests when opening your shared invitation card.
+                  </p>
+                </div>
+
+                <div className="bg-stone-900/80 p-5 rounded-2xl border border-stone-800 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-sm font-sans font-bold text-stone-100">
+                        Primary Invitation Language
+                      </h4>
+                      <p className="text-xs text-stone-400 mt-0.5">
+                        This language will be pre-selected when guests open the web card or scan your QR code.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        updateField('defaultLanguage', 'en');
+                        if (onLanguageChange) onLanguageChange('en');
+                      }}
+                      className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                        (card.defaultLanguage || 'en') === 'en'
+                          ? 'bg-amber-400/15 border-amber-400 text-white shadow-xl ring-2 ring-amber-400/60'
+                          : 'bg-stone-800/60 border-stone-700 text-stone-300 hover:border-stone-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-2xl">🇬🇧</span>
+                        {(card.defaultLanguage || 'en') === 'en' ? (
+                          <span className="text-[10px] bg-amber-400 text-stone-950 font-bold px-2 py-0.5 rounded-full">
+                            Active Default
+                          </span>
+                        ) : null}
+                      </div>
+                      <span className="text-sm font-bold text-stone-100">English</span>
+                      <span className="text-xs text-stone-400 mt-1">
+                        Opens with "We're getting married", "Save The Date" & English typography
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        updateField('defaultLanguage', 'hi');
+                        if (onLanguageChange) onLanguageChange('hi');
+                      }}
+                      className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                        card.defaultLanguage === 'hi'
+                          ? 'bg-amber-400/15 border-amber-400 text-white shadow-xl ring-2 ring-amber-400/60'
+                          : 'bg-stone-800/60 border-stone-700 text-stone-300 hover:border-stone-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-2xl">🇮🇳</span>
+                        {card.defaultLanguage === 'hi' ? (
+                          <span className="text-[10px] bg-amber-400 text-stone-950 font-bold px-2 py-0.5 rounded-full">
+                            Active Default
+                          </span>
+                        ) : null}
+                      </div>
+                      <span className="text-sm font-bold text-stone-100">हिंदी (Hindi)</span>
+                      <span className="text-xs text-stone-400 mt-1">
+                        Opens with "॥ शुभ विवाह ॥", "शुभ परिणय संस्कार" & Devanagari script
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/20 text-xs text-stone-400 space-y-1.5">
+                  <span className="font-semibold text-amber-300 flex items-center space-x-1">
+                    <span>💡 Note for Guests:</span>
+                  </span>
+                  <p>
+                    Regardless of your default language choice, guests can still easily switch between English and Hindi at any time using the language toggle button at the bottom of the card!
+                  </p>
                 </div>
               </div>
             )}

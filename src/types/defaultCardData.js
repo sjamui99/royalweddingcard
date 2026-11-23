@@ -1,6 +1,7 @@
 export const DEFAULT_CARD_DATA = {
   id: "zayn-and-nora",
   title: "Zayn & Nora's Wedding Invitation",
+  defaultLanguage: "en", // "en" or "hi"
   theme: {
     id: "royal-emerald",
     name: "Royal Emerald & Gold",

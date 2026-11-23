@@ -12,8 +12,14 @@ export function ShareModal({ card, onClose }) {
     setTimeout(() => setCopied(false), 2500);
   };
 
+  const isHindi = card?.defaultLanguage === 'hi';
+  const groomName = isHindi && card.groom?.name === 'Zayn' ? 'ज़ैन' : card.groom?.name;
+  const brideName = isHindi && card.bride?.name === 'Nora' ? 'नोरा' : card.bride?.name;
+
   const whatsappText = encodeURIComponent(
-    `✨ You're cordially invited to celebrate the wedding of ${card.groom?.name} & ${card.bride?.name}!\n\nTap the royal invitation link below to open our interactive wedding card:\n${shareUrl}`
+    isHindi
+      ? `✨ आप ${groomName} एवं ${brideName} के शुभ विवाह में सस्नेह आमंत्रित हैं!\n\nशाही डिजिटल निमंत्रण पत्र खोलने के लिए नीचे दिए गए लिंक पर टैप करें:\n${shareUrl}`
+      : `✨ You're cordially invited to celebrate the wedding of ${card.groom?.name} & ${card.bride?.name}!\n\nTap the royal invitation link below to open our interactive wedding card:\n${shareUrl}`
   );
 
   const whatsappUrl = `https://api.whatsapp.com/send?text=${whatsappText}`;

@@ -22,12 +22,21 @@ export default function App() {
   });
 
   const [lang, setLang] = useState(() => {
+    // Prefer card's own defaultLanguage if set
+    if (card?.defaultLanguage) return card.defaultLanguage;
     try {
       return localStorage.getItem('royal_wedding_lang') || 'en';
     } catch {
       return 'en';
     }
   });
+
+  // Sync lang when card defaultLanguage changes
+  useEffect(() => {
+    if (card?.defaultLanguage) {
+      setLang(card.defaultLanguage);
+    }
+  }, [card?.defaultLanguage]);
 
   const handleLanguageChange = (newLang) => {
     setLang(newLang);
@@ -48,6 +57,9 @@ export default function App() {
   // Save changes to localStorage when updated in studio
   const handleUpdateCard = (updated) => {
     setCard(updated);
+    if (updated.defaultLanguage && updated.defaultLanguage !== lang) {
+      setLang(updated.defaultLanguage);
+    }
     try {
       localStorage.setItem('royal_wedding_card_draft', JSON.stringify(updated));
     } catch {}
