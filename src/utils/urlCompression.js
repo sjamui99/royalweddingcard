@@ -64,3 +64,36 @@ export function generateShareableUrl(cardData) {
   const baseUrl = window.location.origin + window.location.pathname;
   return `${baseUrl}?card=${compressed}`;
 }
+
+/**
+ * Shortens a long URL using free public shortening services (TinyURL with is.gd fallback)
+ */
+export async function createShortUrl(longUrl) {
+  if (!longUrl || longUrl.length < 80) return longUrl;
+
+  try {
+    const res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
+    if (res.ok) {
+      const short = (await res.text()).trim();
+      if (short.startsWith('http://') || short.startsWith('https://')) {
+        return short.replace('http://', 'https://');
+      }
+    }
+  } catch (err) {
+    console.warn("TinyURL shortener failed, trying fallback:", err);
+  }
+
+  try {
+    const res = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(longUrl)}`);
+    if (res.ok) {
+      const short = (await res.text()).trim();
+      if (short.startsWith('http://') || short.startsWith('https://')) {
+        return short.replace('http://', 'https://');
+      }
+    }
+  } catch (err) {
+    console.warn("Fallback shortener failed:", err);
+  }
+
+  return longUrl;
+}
