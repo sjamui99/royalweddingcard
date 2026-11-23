@@ -11,7 +11,7 @@ import { PreWeddingEvents } from './PreWeddingEvents';
 import { TravelAccommodation } from './TravelAccommodation';
 import { RSVPSection } from './RSVPSection';
 import { MusicPlayerToggle } from './MusicPlayerToggle';
-import { Sparkles, Edit3, Share2 } from 'lucide-react';
+import { Sparkles, Edit3 } from 'lucide-react';
 
 export function InvitationView({ card, onSwitchToStudio, isPreview = false }) {
   const [isOpened, setIsOpened] = useState(false);
@@ -21,7 +21,7 @@ export function InvitationView({ card, onSwitchToStudio, isPreview = false }) {
       {/* Phone Canvas Container */}
       <div className="relative w-full max-w-md bg-[#fdfbf7] shadow-2xl overflow-x-hidden min-h-screen md:min-h-[850px] md:rounded-3xl border-0 md:border-8 md:border-stone-800">
         
-        {/* The Gatefold Double-Door Opening Envelope Overlay */}
+        {/* The Gatefold Double-Door Opening Envelope Overlay (Tapping Page & Pleated Curtain Page) */}
         <LuxuryEnvelopeGatefold
           isOpened={isOpened}
           onOpen={() => setIsOpened(true)}
@@ -46,10 +46,14 @@ export function InvitationView({ card, onSwitchToStudio, isPreview = false }) {
 
         {/* Inner Card Content (shown once opened or revealed) */}
         <div className={`transition-opacity duration-1000 ${isOpened ? 'opacity-100' : 'opacity-0'}`}>
-          {/* Main Hero (Draped curtain header, Zayn & Nora typography, fountain garden) */}
-          <MainHeroInvitation card={card} />
+          {/* Main Hero: Draped curtain header, Zayn & Nora with staggered one-by-one text entrance */}
+          <MainHeroInvitation
+            card={card}
+            isAnimated={isOpened}
+            key={isOpened ? 'opened' : 'closed'}
+          />
 
-          {/* Interactive Scratch-to-Reveal Card */}
+          {/* Interactive Scratch-to-Reveal Card (Heart on both front and behind) */}
           <ScratchCardSection card={card} />
 
           {/* Couple Moments Carousel */}

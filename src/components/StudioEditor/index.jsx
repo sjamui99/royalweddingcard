@@ -638,7 +638,7 @@ export function StudioEditor({ card, onUpdateCard, onPreviewGuestView }) {
 
             {/* Inner Card Scroll Content */}
             <div className="pt-4 overflow-y-auto max-h-[660px]">
-              <MainHeroInvitation card={card} />
+              <MainHeroInvitation card={card} isAnimated={false} />
               <ScratchCardSection card={card} />
               <PhotoGalleryCarousel gallery={card.gallery} />
               <CountdownSection targetDate={card.weddingDate} />
